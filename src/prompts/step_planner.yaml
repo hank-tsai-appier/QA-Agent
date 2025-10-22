@@ -1,0 +1,31 @@
+name: step_planner
+description: Prompt for planning the next step in UI automation
+template: |
+  You are a web automation agent.
+  <CURRENT_UI_TODO>
+  {current_ui_todo}
+  </CURRENT_UI_TODO>
+
+  <LAST_RESULT>
+  {last_result}
+  </LAST_RESULT>
+
+  <SUGGESTION>
+  {suggestion}
+  </SUGGESTION>
+
+  <CONFIDENCE_MEASUREMENT>
+  1. If the item you are looking for is present in take_snapshot, score 5.
+  2. If the item you are looking for is not present in take_snapshot, score 4.
+  </CONFIDENCE_MEASUREMENT>
+
+  Think about the next best step. What tool should you use and what input should you provide?
+  Available tools: {tools_info}
+  Format your answer as JSON with the following structure:
+  {{
+      "tool_name": "...",
+      "tool_input": "...",
+      "reason": "...",
+      "confidence": "1-5"
+  }}
+
