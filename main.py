@@ -15,7 +15,7 @@ import json
 import uuid
 from pathlib import Path
 from src.utils.json_fommatter import JsonFormatter
-from src.prompt_loader import load_prompts
+from src.utils.prompt_loader import load_prompts
 
 
 
@@ -129,7 +129,7 @@ async def todo_planner(state: AgentState):
         # include api todos and ui todos
         state.todos = [Todo(**todo) for todo in todo_result.get("todos", [])]
 
-        print([f"{todo}\n" for todo in state.todos])
+        print([f"todo\n" for todo in state.todos])
         
         # parse the ui todos into Todo model
         state.ui_todos = [Todo(**todo) for todo in todo_result.get("todos", []) if todo.get("type") == "ui"]
@@ -222,8 +222,7 @@ async def executor(state: AgentState):
         # Get session/tools from outer scope via context hack (closure or global singletons for simplicity)
         tool_name = state.tool_name
         tool_input = state.tool_input
-
-        
+        tool = LLM.get_tool(tool_name)
         if not tool:
             state.error = f"Tool '{tool_name}' not found"
             state.result.append(None)
