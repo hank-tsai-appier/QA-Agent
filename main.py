@@ -1,5 +1,4 @@
 # Standard library related
-from nt import system
 import os
 import dotenv
 import asyncio
